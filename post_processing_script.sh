@@ -18,5 +18,5 @@ sudo mv "$vm_name" /var/lib/docker/volumes/data_dir/_data
 curl -O "https://storage.googleapis.com/geoserver-web-xml/web.xml"
 docker_ps_output=$(sudo docker ps -a)
 container_id=$(echo "$docker_ps_output" | awk '{print $1}' | tail -n +2)
-sudo docker cp -f web.xml $container_id:/opt/apache-tomcat-9.0.68/webapps/geoserver/WEB-INF
+sudo docker cp web.xml $container_id:/opt/apache-tomcat-9.0.68/webapps/geoserver/WEB-INF
 sudo docker restart $container_id
