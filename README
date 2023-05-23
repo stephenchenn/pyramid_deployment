@@ -18,16 +18,19 @@ connect via ssh session:
 		chmod +x setup.sh
 		./setup.sh
 	run gdal retile
+		cd pyramid_deployment
 		chmod +x run.sh
 		nohup ./run.sh <x tile index> <y tile index> &
 		tail -10 nohup.out (to check progress)
 	once finished - move pyramid to geoserver data dir
-		cd mergedPyramid
+		cd pyramid_deployment/mergedPyramid
 		mkdir 0
 		find . -maxdepth 1 -type f -name "*.tif" -print0 | xargs -0 mv -t ./0
 		cd ..
-		mv mergedPyramid mergedPyramid_<tile index x>_<tile index y>
-		sudo mv mergedPyramid_<tile index x>_<tile index y> /var/lib/docker/volumes/data_dir/_data
+		vm_name=$(curl -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/name")
+		mv mergedPyramid "$vm_name"
+		sudo mv "$vm_name" /var/lib/docker/volumes/data_dir/_data
+	publish to geoeserver
 		navigate to http://<vm external ip>:80/geoserver (username: admin / password: geoserver)
 		create workspace tasmania and set url to http://<vm external ip>/geoserver/tasmania and set it as default workspace
 		create a image pyramid store and specify path to file:data/mergedPyramid
