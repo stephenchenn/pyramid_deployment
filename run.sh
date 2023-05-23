@@ -39,6 +39,11 @@ echo "successfully created target directory mergedPyramid"
 gdal_retile.py -v -r cubic -levels 4 -ps 2048 2048 -co "TILED=YES" -targetDir mergedPyramid tas_vrts/merged.vrt
 echo "successfully created tile pyramids for merged.vrt"
 
+# run post processing script
+chmod +x post_processing_script.sh
+./post_processing_script
+echo "post processing completed"
+
 echo "done"
 
 end_time=$(date +%s)
