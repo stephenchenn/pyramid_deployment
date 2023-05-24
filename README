@@ -22,6 +22,9 @@ create machine image:
 		delete vm 'pyramid-vm-original'
 
 use machine image to create vms
+	5. upload files to google cloud bucket:
+		upload startup.sh to google cloud bucket at https://storage.cloud.google.com/geoserver-web-xml/startup.sh
+		upload web.xml (altered to enable CORS) to google cloud bucket at https://storage.cloud.google.com/geoserver-web-xml/web.xml
 	5. to generate deploy script:
 		create instance from machine image 'pyramid-template'
 		region: aus-southeaset1/zone:aus-southeast1-b
@@ -30,7 +33,7 @@ use machine image to create vms
 			value 1: https://storage.cloud.google.com/geoserver-web-xml/startup.sh
 			key 2: startup-script-run
 			value 2: true
-		get equivalent code and paste it in deploy.sh (in the for loop and make the vm name dynamic)
+		get equivalent code and paste it in deploy.sh (in the for loop and make the vm name iterable)
 	5. open cloud shell:
 		upload deploy.sh
 		upload zone
