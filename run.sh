@@ -41,7 +41,7 @@ echo "successfully created tile pyramids for merged.vrt"
 
 # run post processing script
 chmod +x post_processing_script.sh
-./post_processing_script
+./post_processing_script.sh
 echo "post processing completed"
 
 # Set the startup-script-run metadata to false
