@@ -3,7 +3,7 @@ create machine image:
 		name: pyramid-vm-original
 		machine type: e2-highmem-8
 		region/zone: aus-southest1/aus-southeast1-b
-		boot disk size: 2.5TB
+		boot disk size: 2TB
 		firewall: allow http/https traffic
 	2. gcloud set up
 		gcloud init
@@ -19,14 +19,23 @@ create machine image:
 		name: pyramid-template
 		location: regional/aus-southeast1
 	5. once machine image created:
-		delete vm pyramid-vm-original
+		delete vm 'pyramid-vm-original'
 
 use machine image to create vms
+	5. to generate deploy script:
+		create instance from machine image 'pyramid-template'
+		region: aus-southeaset1/zone:aus-southeast1-b
+		go to advanced options/management/metadata and add:
+			key 1: startup-script-url
+			value 1: https://storage.cloud.google.com/geoserver-web-xml/startup.sh
+			key 2: startup-script-run
+			value 2: true
+		get equivalent code and paste it in deploy.sh (in the for loop and make the vm name dynamic)
 	5. open cloud shell:
 		upload deploy.sh
 		upload zone
 		chmod +x deploy.sh
-		./deploy.sh
+		nohup ./deploy.sh > output.txt 2>&1 &
 
 once pyramids are generated:
 	6. publish to geoeserver
