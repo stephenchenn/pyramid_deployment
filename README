@@ -1,53 +1,40 @@
-create a vm instance
-	region: australia-southeast1
-	zone: australia-southeast1-b
-	configure boot disk size according to how much data to process
-	firewall:
-		allow http traffic
-		allow https traffic
-
-connect via ssh session:
-	gcloud set up
+create machine image:
+	1. create vm with config:
+		name: pyramid-vm-original
+		machine type: e2-highmem-8
+		region/zone: aus-southest1/aus-southeast1-b
+		boot disk size: 2.5TB
+		firewall: allow http/https traffic
+	2. gcloud set up
 		gcloud init
 			[2] log in with new acc
 			[45] project: eq-c2rw-research
 			[38] zone: australia-southeast1-b
 		gcloud auth application-default login
-	install dependencies
+	3. install dependencies
 		upload setup.sh
 		chmod +x setup.sh
 		./setup.sh
-	run gdal retile
-		cd pyramid_deployment
-		chmod +x run.sh
-		nohup ./run.sh <x tile index> <y tile index> &
-		tail -10 nohup.out (to check progress)
-	once finished - move pyramid to geoserver data dir
-		cd pyramid_deployment/mergedPyramid
-		mkdir 0
-		find . -maxdepth 1 -type f -name "*.tif" -print0 | xargs -0 mv -t ./0
-		cd ..
-		vm_name=$(curl -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/name")
-		mv mergedPyramid "$vm_name"
-		sudo mv "$vm_name" /var/lib/docker/volumes/data_dir/_data
-	publish to geoeserver
+	4. create a machine image using the vm with config:
+		name: pyramid-template
+		location: regional/aus-southeast1
+	5. once machine image created:
+		delete vm pyramid-vm-original
+
+use machine image to create vms
+	5. open cloud shell:
+		upload deploy.sh
+		upload zone
+		chmod +x deploy.sh
+		./deploy.sh
+
+once pyramids are generated:
+	6. publish to geoeserver
 		navigate to http://<vm external ip>:80/geoserver (username: admin / password: geoserver)
 		create workspace tasmania and set url to http://<vm external ip>/geoserver/tasmania and set it as default workspace
-		create a image pyramid store and specify path to file:data/mergedPyramid
+		create a image pyramid store and specify path to file:data/<vm name>
 		publish layer
 		change declared SRS to EPSG:4326
-		change SRS handling to Reproject to Declared to save computation
+		change SRS handling to Reproject to Declared
 		deselect Use JAI ImageRead (deferred loading)
-
-to serve the layer to cesium js:
-	update geoserver config in web.xml to enable CORS
-		follow "Enable CORS" section in https://docs.geoserver.org/latest/en/user/production/container.html
-		sudo docker exec -it <container id> sh
-		cd /opt/apache-tomcat-9.0.68/webapps/geoserver/WEB-INF
-		apt-get update
-		apt-get install vim -y
-		vim web.xml (and press i to edit)
-		uncomment <filter> and <filter-mapping> according to documentation
-		press esc and type :wq! to save
-		exit
-		sudo docker restart <container id> (for it to take effect)
+	7. update the cesium file to reflect the changes (ip and zones)

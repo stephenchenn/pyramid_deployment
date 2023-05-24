@@ -34,7 +34,7 @@ echo "successfully created target directory mergedPyramid"
 # echo "number of levels: $levels"
 
 # Create tile pyramids of the VRT
-# -co "COMPRESS=LZW" 
+# -co "COMPRESS=LZW"
 # gdal_retile.py -v -r cubic -levels $levels -ps 2048 2048 -co "TILED=YES" -targetDir mergedPyramid tas_vrts/output.vrt
 gdal_retile.py -v -r cubic -levels 4 -ps 2048 2048 -co "TILED=YES" -targetDir mergedPyramid tas_vrts/merged.vrt
 echo "successfully created tile pyramids for merged.vrt"
@@ -43,6 +43,13 @@ echo "successfully created tile pyramids for merged.vrt"
 chmod +x post_processing_script.sh
 ./post_processing_script
 echo "post processing completed"
+
+# Set the startup-script-run metadata to false
+instance_name=$(curl -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/name")
+instance_name=$(basename "$instance_name")
+instance_zone=$(curl -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/zone")
+instance_zone=$(basename "$instance_zone")
+gcloud compute instances add-metadata projects/cgfy-stephan/zones/"$instance_zone"/instances/"$instance_name" --metadata startup-script-run=false
 
 echo "done"
 
