@@ -24,7 +24,7 @@ create machine image:
 use machine image to create vms
 	5. upload files to google cloud bucket:
 		upload startup.sh to google cloud bucket at https://storage.cloud.google.com/geoserver-web-xml/startup.sh
-		upload web.xml (altered to enable CORS) to google cloud bucket at https://storage.cloud.google.com/geoserver-web-xml/web.xml
+		upload web.xml (altered to enable CORS, more details at https://docs.geoserver.org/latest/en/user/production/container.html#enable-cors) to google cloud bucket at https://storage.cloud.google.com/geoserver-web-xml/web.xml
 	5. to generate deploy script:
 		create instance from machine image 'pyramid-template'
 		region: aus-southeaset1/zone:aus-southeast1-b
@@ -50,3 +50,8 @@ once pyramids are generated:
 		change SRS handling to Reproject to Declared
 		deselect Use JAI ImageRead (deferred loading)
 	7. update the cesium file to reflect the changes (ip and zones)
+
+extra notes:
+	8. for zones that finish processing first, stop them first until all zones are finished
+	9. once all zones are finished, start all stopped vm and run:
+		sudo docker ps -a | awk 'NR>1 {print $1}' | xargs sudo docker start

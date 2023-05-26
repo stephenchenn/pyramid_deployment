@@ -1,9 +1,7 @@
 #!/bin/bash
 
 # starting geoserver
-docker_ps_output=$(sudo docker ps -a)
-container_id=$(echo "$docker_ps_output" | awk '{print $1}' | tail -n +2)
-sudo docker start "$container_id"
+sudo docker ps -a | awk 'NR>1 {print $1}' | xargs sudo docker start
 
 # moving the pyramid to the data directory
 cd /home/stephen_chen/pyramid_deployment/mergedPyramid
