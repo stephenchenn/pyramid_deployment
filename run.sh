@@ -51,6 +51,8 @@ instance_zone=$(curl -H "Metadata-Flavor: Google" "http://metadata.google.intern
 instance_zone=$(basename "$instance_zone")
 gcloud compute instances add-metadata projects/cgfy-stephan/zones/"$instance_zone"/instances/"$instance_name" --metadata startup-script-run=false
 
+python3 restapi.py
+
 echo "done"
 
 end_time=$(date +%s)
