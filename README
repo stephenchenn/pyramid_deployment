@@ -16,7 +16,7 @@ create machine image:
 		chmod +x setup.sh
 		./setup.sh
 	4. create a machine image using the vm with config:
-		name: pyramid-template
+		name: pyramid-template-<size>
 		location: regional/aus-southeast1
 	5. once machine image created:
 		delete vm 'pyramid-vm-original'
