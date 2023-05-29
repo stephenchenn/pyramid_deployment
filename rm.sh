@@ -8,8 +8,8 @@ while true; do
 
     if [[ "${parts[1]}" == "1" ]]; then
         echo "Second part is equal to '1'"
-        # rm -r tas_images
-        echo "$output"
+        rm -r tas_images
+        break
     fi
     sleep 30  # Sleep for 5 minutes (300 seconds)
 done

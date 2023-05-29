@@ -1,8 +1,8 @@
 create machine image:
 	1. create vm with config:
 		name: pyramid-vm-original
-		machine type: e2-highmem-8
 		region/zone: aus-southest1/aus-southeast1-b
+		machine type: e2-highmem-8
 		boot disk size: 2TB
 		firewall: allow http/https traffic
 	2. gcloud set up
@@ -28,7 +28,7 @@ use machine image to create vms
 	5. to generate deploy script:
 		create instance from machine image 'pyramid-template'
 		region: aus-southeaset1/zone:aus-southeast1-b
-		go to advanced options/management/metadata and add:
+		advanced options/management/metadata/add item:
 			key 1: startup-script-url
 			value 1: https://storage.cloud.google.com/geoserver-web-xml/startup.sh
 			key 2: startup-script-run
