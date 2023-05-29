@@ -2,12 +2,8 @@
 
 while true; do
     output=$(tail -n 1 output.txt)
-    delimiter="/"
 
-    IFS="$delimiter" read -ra parts <<< "$output"
-
-    if [[ "${parts[1]}" == "1" ]]; then
-        echo "Second part is equal to '1'"
+    if echo "$output" | grep -q "^mergedPyramid/1/"; then
         rm -r tas_images
         break
     fi
