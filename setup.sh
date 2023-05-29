@@ -49,7 +49,7 @@ sudo docker run -p 80:8080 -itd --name geoserver --mount source=data_dir,target=
 sudo apt-get update
 sudo apt-get install unzip
 # URL of the file to download
-url="https://ixpeering.dl.sourceforge.net/project/geoserver/GeoServer/2.22.2/extensions/geoserver-2.22.2-pyramid-plugin.zip"
+url="https://jaist.dl.sourceforge.net/project/geoserver/GeoServer/2.22.2/extensions/geoserver-2.22.2-pyramid-plugin.zip"
 # Download the file using curl
 curl -O "$url"
 unzip geoserver-2.22.2-pyramid-plugin.zip -d pyramid-plugin
