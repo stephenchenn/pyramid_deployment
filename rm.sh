@@ -11,5 +11,5 @@ while true; do
         rm -r tas_images
         break
     fi
-    sleep 30  # Sleep for 5 minutes (300 seconds)
+    sleep 300  # Sleep for 5 minutes (300 seconds)
 done
