@@ -10,5 +10,5 @@ while true; do
         break
     fi
 
-    sleep 300  # Sleep for 5 minutes (300 seconds)
+    sleep 3  # Sleep for 5 minutes (300 seconds)
 done
