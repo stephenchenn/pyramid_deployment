@@ -6,7 +6,7 @@ while true; do
 
     # Check if the last line starts with any of the specified patterns
     if [[ $last_line =~ ^(mergedPyramid\/[1-4]\/) ]]; then
-        echo "Matching pattern found: $last_line"
+        rm -r tas_images
         break
     fi
 
