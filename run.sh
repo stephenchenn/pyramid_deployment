@@ -53,6 +53,8 @@ gcloud compute instances add-metadata projects/cgfy-stephan/zones/"$instance_zon
 
 python3 restapi.py
 
+gcloud compute instances add-metadata projects/cgfy-stephan/zones/"$instance_zone"/instances/"$instance_name" --metadata published=true
+
 echo "done"
 
 end_time=$(date +%s)
