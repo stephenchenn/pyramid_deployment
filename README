@@ -1,7 +1,7 @@
 create machine image:
 	1. create vm with config:
 		name: pyramid-vm-original
-		region/zone: aus-southest1/aus-southeast1-b OR aus-southest2/aus-southeast2-a
+		region/zone: aus-southest1/aus-southeast1-b OR aus-southest2/aus-southeast2-a OR asia-southeast1/asia-southeast1-b
 		machine type: e2-highmem-8
 		boot disk size: 1.5TB for big zones, 1.2TB for small zones, 800GB for tiny zones
 		firewall: allow http/https traffic
@@ -9,7 +9,7 @@ create machine image:
 		gcloud init
 			[2] log in with new acc
 			[45] project: eq-c2rw-research
-			[38] zone: australia-southeast1-b OR [59] zone: australia-southeast2-a
+			[38] zone: australia-southeast1-b OR [59] zone: australia-southeast2-a OR [29] zone: asia-southeast1-b
 		gcloud auth application-default login
 	3. install dependencies
 		upload setup.sh
