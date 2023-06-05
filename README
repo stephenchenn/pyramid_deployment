@@ -22,10 +22,10 @@ create machine image:
 		delete vm 'pyramid-vm-original'
 
 use machine image to create vms
-	5. upload files to google cloud bucket:
+	6. upload files to google cloud bucket:
 		upload startup.sh to google cloud bucket at https://storage.cloud.google.com/geoserver-web-xml/startup.sh
 		upload web.xml (altered to enable CORS, more details at https://docs.geoserver.org/latest/en/user/production/container.html#enable-cors) to google cloud bucket at https://storage.cloud.google.com/geoserver-web-xml/web.xml
-	5. to generate deploy script:
+	7. to generate deploy script:
 		create instance from machine image 'pyramid-template-<size>'
 		region: aus-southeaset1/zone:aus-southeast1-b
 		advanced options/management/metadata/add item:
@@ -34,14 +34,14 @@ use machine image to create vms
 			key 2: startup-script-run
 			value 2: true
 		get equivalent code and paste it in deploy.sh (in the for loop and make the vm name iterable)
-	5. open cloud shell:
+	8. open cloud shell:
 		upload deploy.sh
 		upload zone
 		chmod +x deploy.sh
 		nohup ./deploy.sh > output.txt 2>&1 &
 
 once pyramids are generated:
-	6. publish to geoeserver
+	9. publish to geoeserver
 		navigate to http://<vm external ip>:80/geoserver (username: admin / password: geoserver)
 		create workspace tasmania and set url to http://<vm external ip>/geoserver/tasmania and set it as default workspace
 		create a image pyramid store and specify path to file:data/<vm name>
@@ -49,9 +49,9 @@ once pyramids are generated:
 		change declared SRS to EPSG:4326
 		change SRS handling to Reproject to Declared
 		deselect Use JAI ImageRead (deferred loading)
-	7. update the cesium file to reflect the changes (ip and zones)
+	10. update the cesium file to reflect the changes (ip and zones)
 
 extra notes:
-	8. for zones that finish processing first, stop them first until all zones are finished
-	9. once all zones are finished, start all stopped vm and run:
+	11. for zones that finish processing first, stop them first until all zones are finished
+	12. once all zones are finished, start all stopped vm and run:
 		sudo docker ps -a | awk 'NR>1 {print $1}' | xargs sudo docker start
