@@ -1,0 +1,8 @@
+gcloud compute instances list --format="value(name)"
+gcloud compute instances list --format="value(zone)"
+gcloud compute instances describe pyramid-921-737 --format="get(networkInterfaces[0].accessConfigs[0].natIP)"
+
+1. gcloud compute instances list --format="value(name)" paste output in vm.txt
+2. gcloud compute instances list --format="value(zone)" paste output in zone.txt
+3. ./get_external_ips.sh and paste output in ips.txt
+4. python3 extract_corner_coord.py and paste output in code
