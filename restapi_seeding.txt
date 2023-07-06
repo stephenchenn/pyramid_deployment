@@ -1,0 +1,1 @@
+curl -v -u admin:geoserver -XPOST -H "Content-type: text/xml" -d '<seedRequest><name>topp:pyramid-925-746</name><srs><number>4326</number></srs><zoomStart>1</zoomStart><zoomStop>18</zoomStop><format>image/png</format><type>seed</type><threadCount>16</threadCount></seedRequest>'  "http://34.126.153.197/geoserver/gwc/rest/seed/topp:pyramid-925-746.xml"
